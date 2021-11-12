@@ -1,2 +1,4 @@
 #ignore python environment
 env
+
+.vscode
