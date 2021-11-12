@@ -4,3 +4,5 @@ env
 .vscode
 
 db-credentials.txt
+
+__pycache__
