@@ -92,6 +92,8 @@ def extractItemInfo(soup):
 
         return itemInfo
 
+notRequiredKeys = []
+
 def cleanDict(dict):
     keysToPop = []
     for key in dict.keys():
@@ -106,15 +108,25 @@ def cleanDict(dict):
         if key == 'id':
             dict['id'] = dict['id'][:-1]
 
-    return dict
+
+    return dict, keysToPop
 
 itemLinks = getItemLinks()
 
 allData = []
+n = 1
 for item in itemLinks:
-    itemInfo = cleanDict(extractItemInfo(createItemSoup(item)))
+    itemInfo, tempNotRequiredKeys = cleanDict(extractItemInfo(createItemSoup(item)))
+    print(f'Item: {n}')
+    n += 1
     allData.append(itemInfo)
+    for tempKey in tempNotRequiredKeys:
+        if tempKey not in notRequiredKeys:
+            notRequiredKeys.append(tempKey)
+
     #pprint.pprint(itemInfo)
+
+print(notRequiredKeys)
 
 with open('db-credentials.txt') as f:
     credURL = f.readline()
